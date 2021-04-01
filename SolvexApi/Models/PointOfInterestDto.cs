@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace SolvexApi
+namespace SolvexApi.Models
 {
     public class PointOfInterestDto
     {

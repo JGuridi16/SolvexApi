@@ -1,15 +1,16 @@
 using SolvexApi.Interfaces;
+using SolvexApi.Models;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace SolvexApi.Contexts
 {
-    public class CityContext : ICityContext
+    public class CityDtoContext : ICityContext
     {
-        public readonly static ICityContext context = new CityContext();
+        public readonly static ICityContext context = new CityDtoContext();
         private List<CityDto> list;
 
-        public CityContext()
+        public CityDtoContext()
         {
             LoadCities();
         }

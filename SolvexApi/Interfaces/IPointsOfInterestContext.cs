@@ -1,3 +1,4 @@
+using SolvexApi.Models;
 using System.Collections.Generic;
 
 namespace SolvexApi.Interfaces

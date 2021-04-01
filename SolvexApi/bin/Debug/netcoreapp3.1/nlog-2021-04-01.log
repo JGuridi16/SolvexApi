@@ -1,0 +1,44 @@
+2021-04-01 13:00:02.8651|INFO|SolvexApi.Program|Initializing application...
+2021-04-01 13:00:04.5815|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-04-01 13:00:04.5969|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-04-01 13:00:04.6075|INFO|Microsoft.Hosting.Lifetime|Content root path: C:\Users\hp\source\repos\SolvexApi\SolvexApi
+2021-04-01 13:00:20.9327|FATAL|SolvexApi.Controllers.PointOfInterestController|Execption while getting points of interest for the city with id 1
+2021-04-01 13:12:54.0131|ERROR|Microsoft.EntityFrameworkCore.Database.Command|Failed executing DbCommand (4ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [Cities] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(50) NOT NULL,
+    [Description] nvarchar(200) NULL,
+    CONSTRAINT [PK_Cities] PRIMARY KEY ([Id])
+);
+2021-04-01 13:16:11.6256|ERROR|Microsoft.EntityFrameworkCore.Database.Command|Failed executing DbCommand (4ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [Cities] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(50) NOT NULL,
+    [Description] nvarchar(200) NULL,
+    CONSTRAINT [PK_Cities] PRIMARY KEY ([Id])
+);
+2021-04-01 13:19:01.3615|ERROR|Microsoft.EntityFrameworkCore.Database.Command|Failed executing DbCommand (5ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [Cities] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(50) NOT NULL,
+    [Description] nvarchar(200) NULL,
+    CONSTRAINT [PK_Cities] PRIMARY KEY ([Id])
+);
+2021-04-01 13:37:08.7533|ERROR|Microsoft.EntityFrameworkCore.Database.Command|Failed executing DbCommand (6ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [Cities] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(50) NOT NULL,
+    [Description] nvarchar(200) NULL,
+    CONSTRAINT [PK_Cities] PRIMARY KEY ([Id])
+);
+2021-04-01 13:43:59.3025|ERROR|Microsoft.EntityFrameworkCore.Database.Command|Failed executing DbCommand (4ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [Cities] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(50) NOT NULL,
+    [Description] nvarchar(200) NULL,
+    CONSTRAINT [PK_Cities] PRIMARY KEY ([Id])
+);
+2021-04-01 14:35:14.0572|INFO|SolvexApi.Program|Initializing application...
+2021-04-01 14:35:20.4738|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-04-01 14:35:20.4880|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-04-01 14:35:20.5014|INFO|Microsoft.Hosting.Lifetime|Content root path: C:\Users\hp\source\repos\SolvexApi\SolvexApi

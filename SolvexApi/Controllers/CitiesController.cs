@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using SolvexApi.Contexts;
 using SolvexApi.Interfaces;
+using SolvexApi.Models;
 using System;
 
 namespace SolvexApi.Controllers
@@ -15,7 +16,7 @@ namespace SolvexApi.Controllers
 
         public CitiesController(ILogger<CitiesController> logger)
         {
-            context = CityContext.context;
+            context = CityDtoContext.context;
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 

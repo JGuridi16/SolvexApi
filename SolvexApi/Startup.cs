@@ -7,16 +7,19 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SolvexApi.Interfaces;
 using SolvexApi.Services;
+using SolvexApi.Contexts;
+using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace SolvexApi
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -30,6 +33,8 @@ namespace SolvexApi
 #else
             services.AddTransient<IMailService, CloudMailService>();
 #endif
+            var connectionString = Configuration["connectionStrings:CityInfoDb"];
+            services.AddDbContext<CityInfoContext>(o => o.UseSqlServer(connectionString));
             services.AddControllers();
         }
 

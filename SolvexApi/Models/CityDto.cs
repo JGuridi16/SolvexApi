@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace SolvexApi
+namespace SolvexApi.Models
 {
     public class CityDto
     {

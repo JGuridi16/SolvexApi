@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SolvexApi.Contexts;
 using SolvexApi.Interfaces;
-using SolvexApi.Services;
+using SolvexApi.Models;
 using System;
 using System.Linq;
 
@@ -19,8 +19,8 @@ namespace SolvexApi.Controllers
 
         public PointOfInterestController(ILogger<PointOfInterestController> logger, IMailService mailService)
         {
-            cityContext = CityContext.context;
-            pointsOfInterestContext = PointsOfInterestContext.context;
+            cityContext = CityDtoContext.context;
+            pointsOfInterestContext = PointsOfInterestDtoContext.context;
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _mailService = mailService ?? throw new ArgumentNullException();
         }
@@ -30,7 +30,7 @@ namespace SolvexApi.Controllers
         {
             try
             {
-                // throw new Exception();
+                //throw new Exception();
                 var city = cityContext.GetOneCity(cityId);
                 if (city == null)
                 {

@@ -1,14 +1,15 @@
 using SolvexApi.Interfaces;
+using SolvexApi.Models;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace SolvexApi.Contexts
 {
-    public class PointsOfInterestContext : IPointsOfInterestContext
+    public class PointsOfInterestDtoContext : IPointsOfInterestContext
     {
-        public readonly static IPointsOfInterestContext context = new PointsOfInterestContext();
+        public readonly static IPointsOfInterestContext context = new PointsOfInterestDtoContext();
 
-        public PointsOfInterestContext() { }
+        public PointsOfInterestDtoContext() { }
 
         public List<PointOfInterestDto> GetAllPointsOfInterest(CityDto city)
         {
