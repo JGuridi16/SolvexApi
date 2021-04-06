@@ -1,10 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using SolvexApi.Entities;
-using SolvexApi.Interfaces;
-using SolvexApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace SolvexApi.Contexts
 {
@@ -16,7 +11,6 @@ namespace SolvexApi.Contexts
         public CityInfoContext(DbContextOptions<CityInfoContext> options)
             : base(options)
         {
-            //Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -57,11 +51,5 @@ namespace SolvexApi.Contexts
 
             base.OnModelCreating(modelBuilder);
         }
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer("ConnectionString");
-        //    base.OnConfiguring(optionsBuilder);
-        //}
     }
 }

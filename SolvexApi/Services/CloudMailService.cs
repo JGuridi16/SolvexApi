@@ -16,7 +16,7 @@ namespace SolvexApi.Services
 
         public void SendMail(string subject, string message)
         {
-            Debug.WriteLine(string.Format("Mail from {0} to {1}, with CloudMailService.", _configuration["mailSettings:mailFromAddress"]), _configuration["mailSettings:mailToAddress"]);
+            Debug.WriteLine(string.Format("Mail from {0} to {1}, with CloudMailService.", _configuration["mailSettings:mailFromAddress"], _configuration["mailSettings:mailToAddress"]));
             Debug.WriteLine($"Subject: {subject}");
             Debug.WriteLine($"Message: {message}");
         }

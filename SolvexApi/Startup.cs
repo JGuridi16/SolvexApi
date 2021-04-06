@@ -10,6 +10,7 @@ using SolvexApi.Services;
 using SolvexApi.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System;
+using SolvexApi.Repositories;
 
 namespace SolvexApi
 {
@@ -35,6 +36,7 @@ namespace SolvexApi
 #endif
             var connectionString = Configuration["connectionStrings:CityInfoDb"];
             services.AddDbContext<CityInfoContext>(o => o.UseSqlServer(connectionString));
+            services.AddScoped<ICityInfoRepository, CityInfoRepository>();
             services.AddControllers();
         }
 

@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using SolvexApi.Contexts;
+using SolvexApi.Entities;
 using SolvexApi.Interfaces;
 using SolvexApi.Models;
-using System;
+using System.Collections.Generic;
 
 namespace SolvexApi.Controllers
 {
@@ -11,71 +10,92 @@ namespace SolvexApi.Controllers
     [Route("[controller]")]
     public class CitiesController : ControllerBase
     {
-        private readonly ICityContext context;
-        private readonly ILogger _logger;
+        private readonly ICityInfoRepository _cityInfoRepository;
 
-        public CitiesController(ILogger<CitiesController> logger)
+        public CitiesController(ICityInfoRepository cityInfoRepository)
         {
-            context = CityDtoContext.context;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _cityInfoRepository = cityInfoRepository;
         }
 
         [HttpGet(Name = "GetAllCities")]
         public IActionResult GetCities()
         {
-            var list = context.GetAllCities();
-            if (list == null) return NoContent();
-            return Ok(list);
+            var cityEntities = _cityInfoRepository.GetAllCities();
+
+            var results = new List<CityWithoutPointOfInterestDto>();
+
+            foreach (var city in cityEntities)
+            {
+                results.Add(new CityWithoutPointOfInterestDto()
+                { 
+                    Id = city.Id,
+                    Name = city.Name,
+                    Description =  city.Description,
+                });
+            }
+
+            return Ok(results);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetCity(int id)
+        public IActionResult GetCity(int id, bool includePointsOfInterest = false)
         {
-            var entityToReturn = context.GetOneCity(id);
-            if (entityToReturn == null) return NotFound();
-            return Ok(entityToReturn);
+            var city = _cityInfoRepository.GetOneCity(id, includePointsOfInterest);
+            if (city == null) return NotFound();
+            if (includePointsOfInterest)
+            {
+                var cityDto = new CityDto()
+                {
+                    Id = city.Id,
+                    Name = city.Name,
+                    Description = city.Description
+                };
+
+                AttachPointsOfInterestToCity(city, ref cityDto);
+
+                return Ok(cityDto);
+            }
+
+            var cityWithoutPointsResult = new CityWithoutPointOfInterestDto()
+            {
+                Id = city.Id,
+                Name = city.Name,
+                Description = city.Description
+            };
+
+            return Ok(cityWithoutPointsResult);
         }
 
         [HttpPost]
         public IActionResult InsertCity([FromBody] CityDto city)
         {
-            bool hasRedFlags = HasRedFlags(city.Id);
-            if (hasRedFlags) return BadRequest(ModelState);
-
-            var entity = context.GetOneCity(city.Id);
-            if (entity != null) return Conflict("City already exists");
-            context.InsertCity(city);
-            return CreatedAtRoute("GetAllCities", new { }, city);
+            return Ok();
         }
 
         [HttpPut]
         public IActionResult UpdateCity([FromBody] CityDto city)
         {
-            var isSuccess = context.UpdateCity(city);
-            if (!isSuccess) return NotFound(context.GetAllCities());
-            return Ok(context.GetAllCities());
+            return Ok();
         }
 
         [HttpDelete("{id}")]
         public IActionResult DropCity(int id)
         {
-            bool isSuccess = context.DeleteCity(id);
-            if (!isSuccess) return NotFound(context.GetAllCities());
-            return Ok(context.GetAllCities());
+            return Ok();
         }
 
         #region Private Methods
-        private bool HasRedFlags(int cityId)
+        private void AttachPointsOfInterestToCity(City cityFromRepo, ref CityDto cityDto)
         {
-            if (cityId <= 0)
+            foreach (var pointOfInterest in cityFromRepo.PointsOfInterest)
             {
-                ModelState.AddModelError("City Id", "The id provided is not allowed");
-                return true;
+                cityDto.PointsOfInterest.Add(new PointOfInterestDto()
+                {
+                    Id = pointOfInterest.Id,
+                    Name = pointOfInterest.Name,
+                    Description = pointOfInterest.Description
+                });
             }
-
-            if (!ModelState.IsValid) return true;
-
-            return false;
         }
         #endregion
     }

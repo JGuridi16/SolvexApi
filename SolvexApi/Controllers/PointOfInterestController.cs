@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SolvexApi.Contexts;
+using SolvexApi.Entities;
 using SolvexApi.Interfaces;
 using SolvexApi.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SolvexApi.Controllers
@@ -12,17 +14,15 @@ namespace SolvexApi.Controllers
     [Route("cities/{cityId}/pointsofinterest")]
     public class PointOfInterestController : ControllerBase
     {
-        private readonly ICityContext cityContext;
-        private readonly IPointsOfInterestContext pointsOfInterestContext;
+        private readonly ICityInfoRepository _cityInfoRepository;
         private readonly ILogger<PointOfInterestController> _logger;
         private readonly IMailService _mailService;
 
-        public PointOfInterestController(ILogger<PointOfInterestController> logger, IMailService mailService)
+        public PointOfInterestController(ILogger<PointOfInterestController> logger, IMailService mailService, ICityInfoRepository cityInfoRepository)
         {
-            cityContext = CityDtoContext.context;
-            pointsOfInterestContext = PointsOfInterestDtoContext.context;
+            _cityInfoRepository = cityInfoRepository ?? throw new ArgumentNullException(nameof(cityInfoRepository));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _mailService = mailService ?? throw new ArgumentNullException();
+            _mailService = mailService ?? throw new ArgumentNullException(nameof(mailService));
         }
 
         [HttpGet]
@@ -30,20 +30,22 @@ namespace SolvexApi.Controllers
         {
             try
             {
-                //throw new Exception();
-                var city = cityContext.GetOneCity(cityId);
-                if (city == null)
+                if (_cityInfoRepository.CityExists(cityId))
                 {
-                    _logger.LogInformation($"City with id {cityId} was not found when accesing point of interest");
+                    _logger.LogInformation($"City with id {cityId} was not found when accesing points of interest.");
                     return NotFound();
                 }
 
-                var list = pointsOfInterestContext.GetAllPointsOfInterest(city);
-                return Ok(list);
+                var listOfPointsOfInterest = _cityInfoRepository.GetAllPointsOfInterestForCity(cityId);
+                var listPointsOfInterestDto = new List<PointOfInterestDto>();
+
+                AttachPointsOfInterestForCity(listOfPointsOfInterest, ref listPointsOfInterestDto);
+
+                return Ok(listPointsOfInterestDto);
             }
-            catch(Exception ex)
+            catch
             {
-                _logger.LogCritical($"Execption while getting points of interest for the city with id {cityId}", ex.Message);
+                _logger.LogCritical($"Exception while getting points of interest from city with id {cityId}");
                 return StatusCode(500, "A problem happened while handling your request.");
             }
         }
@@ -51,74 +53,51 @@ namespace SolvexApi.Controllers
         [HttpGet("{id}", Name = "GetPointOfInterest")]
         public IActionResult GetPointOfInterest(int cityId, int id)
         {
-            var city = cityContext.GetOneCity(cityId);
-            if (city == null) return NotFound("No city found");
+            if (!_cityInfoRepository.CityExists(cityId)) return NotFound("City not found");
 
-            var pointOfInterest = pointsOfInterestContext.GetOnePointOfInterest(city, id);
-            if (pointOfInterest == null) return NotFound("No interest point found");
-            return Ok(pointOfInterest);
+            var pointOfInterest = _cityInfoRepository.GetOnePointOfInterestForCity(cityId, id);
+            if (pointOfInterest == null) return NotFound("Point of interest not found");
+
+            var pointOfInterestDto = new PointOfInterestDto()
+            {
+                Id = pointOfInterest.Id,
+                Name = pointOfInterest.Name,
+                Description = pointOfInterest.Description
+            };
+
+            return Ok(pointOfInterestDto);
         }
 
         [HttpPost]
         public IActionResult CreatePointOfInterest(int cityId, [FromBody] PointOfInterestDto pointOfInterest)
         {
-            bool hasRedFlags = HasRedFlags(pointOfInterest.Id);
-            if (hasRedFlags) return BadRequest(ModelState);
-
-            var city = cityContext.GetOneCity(cityId);
-            if (city == null) return NotFound("City does not exist");
-
-            var entityExists = CityContainsPointOfInterest(city, pointOfInterest);
-            if (entityExists) return Conflict("Point already created");
-
-            pointsOfInterestContext.AttachPointOfInterestToCity(city, pointOfInterest);
-            return CreatedAtRoute("GetPointOfInterest", new { cityId, pointOfInterest.Id }, pointOfInterest);
+            return Ok();
         }
 
         [HttpPut]
         public IActionResult UpdatePointOfInterest(int cityId, PointOfInterestDto pointOfInterest)
         {
-            var city = cityContext.GetOneCity(cityId);
-            if (city == null) return NotFound("Invalid city");
-
-            var isSuccess = pointsOfInterestContext.UpdatePointOfInterest(city, pointOfInterest);
-            if (!isSuccess) return NotFound("No point of interest found");
-
             return Ok();
         }
 
         [HttpDelete("{pointOfInterestId}")]
         public IActionResult DeletePointOfInterest(int cityId, int pointOfInterestId)
         {
-            var city = cityContext.GetOneCity(cityId);
-            if (city == null) return NotFound("Invalid city");
-
-            var isSuccess = pointsOfInterestContext.DropPointOfInterest(city, pointOfInterestId);
-            if (!isSuccess) return NotFound("Point of interest not found");
-
-            _mailService.SendMail("Point of interest deleted", $"Point of interest with id {pointOfInterestId} was deleted.");
-            
-            return NoContent();
+            return Ok();
         }
 
         #region Private Methods
-
-        private bool CityContainsPointOfInterest(CityDto city, PointOfInterestDto pointOfInterest)
+        private void AttachPointsOfInterestForCity(IEnumerable<PointOfInterest> pointOfInterestsFromRepo, ref List<PointOfInterestDto> pointsOfInterestDto)
         {
-            var entity = city.PointsOfInterest.SingleOrDefault(p => p.Id.Equals(pointOfInterest.Id));
-            if (entity == null) return false;
-            return true;
-        }
-
-        private bool HasRedFlags(int pointOfInterestId)
-        {
-            if (pointOfInterestId <= 0)
+            foreach (var pointOfInterest in pointOfInterestsFromRepo)
             {
-                ModelState.AddModelError("Interest Point Id", "The id provided is not allowed");
-                return true;
+                pointsOfInterestDto.Add(new PointOfInterestDto()
+                {
+                    Id = pointOfInterest.Id,
+                    Name = pointOfInterest.Name,
+                    Description = pointOfInterest.Description
+                });
             }
-            if (!ModelState.IsValid) return true;
-            return false;
         }
         #endregion
     }
