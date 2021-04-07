@@ -47,5 +47,26 @@ namespace SolvexApi.Repositories
         {
             return _context.Cities.Any(c => c.Id == cityId);
         }
+
+        public void AddPointOfInterestForCity(int cityId, PointOfInterest pointOfInterest)
+        {
+            var city = GetOneCity(cityId, false);
+            city.PointsOfInterest.Add(pointOfInterest);
+        }
+
+        public void UpdatePointOfInterestForCity(int cityId, PointOfInterest pointOfInterest)
+        {
+
+        }
+
+        public void DeletePointOfInterestForCity(int cityId, PointOfInterest pointOfInterest)
+        {
+            _context.PointsOfInterest.Remove(pointOfInterest);
+        }
+
+        public bool Save()
+        {
+            return _context.SaveChanges() >= 0;
+        }
     }
 }

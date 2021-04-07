@@ -37,6 +37,7 @@ namespace SolvexApi
             var connectionString = Configuration["connectionStrings:CityInfoDb"];
             services.AddDbContext<CityInfoContext>(o => o.UseSqlServer(connectionString));
             services.AddScoped<ICityInfoRepository, CityInfoRepository>();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddControllers();
         }
 

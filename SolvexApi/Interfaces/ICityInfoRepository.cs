@@ -10,5 +10,9 @@ namespace SolvexApi.Interfaces
         IEnumerable<PointOfInterest> GetAllPointsOfInterestForCity(int cityId);
         PointOfInterest GetOnePointOfInterestForCity(int cityId, int pointOfInterestId);
         bool CityExists(int cityId);
+        void AddPointOfInterestForCity(int cityId, PointOfInterest pointOfInterest);
+        void UpdatePointOfInterestForCity(int cityId, PointOfInterest pointOfInterest);
+        void DeletePointOfInterestForCity(int cityId, PointOfInterest pointOfInterest);
+        bool Save();
     }
 }

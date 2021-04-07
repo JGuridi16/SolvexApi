@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using SolvexApi.Entities;
 using SolvexApi.Interfaces;
 using SolvexApi.Models;
@@ -11,10 +12,12 @@ namespace SolvexApi.Controllers
     public class CitiesController : ControllerBase
     {
         private readonly ICityInfoRepository _cityInfoRepository;
+        private readonly IMapper _mapper;
 
-        public CitiesController(ICityInfoRepository cityInfoRepository)
+        public CitiesController(ICityInfoRepository cityInfoRepository, IMapper mapper)
         {
             _cityInfoRepository = cityInfoRepository;
+            _mapper = mapper;
         }
 
         [HttpGet(Name = "GetAllCities")]
@@ -22,53 +25,30 @@ namespace SolvexApi.Controllers
         {
             var cityEntities = _cityInfoRepository.GetAllCities();
 
-            var results = new List<CityWithoutPointOfInterestDto>();
-
-            foreach (var city in cityEntities)
-            {
-                results.Add(new CityWithoutPointOfInterestDto()
-                { 
-                    Id = city.Id,
-                    Name = city.Name,
-                    Description =  city.Description,
-                });
-            }
-
-            return Ok(results);
+            return Ok(_mapper.Map<IEnumerable<CityWithoutPointsOfInterestDto>>(cityEntities));
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetCity(int id, bool includePointsOfInterest = false)
+        public IActionResult GetCity([FromRoute] int id, bool includePointsOfInterest = false)
         {
             var city = _cityInfoRepository.GetOneCity(id, includePointsOfInterest);
             if (city == null) return NotFound();
             if (includePointsOfInterest)
             {
-                var cityDto = new CityDto()
-                {
-                    Id = city.Id,
-                    Name = city.Name,
-                    Description = city.Description
-                };
-
-                AttachPointsOfInterestToCity(city, ref cityDto);
-
-                return Ok(cityDto);
+                return Ok(_mapper.Map<CityDto>(city));
             }
 
-            var cityWithoutPointsResult = new CityWithoutPointOfInterestDto()
-            {
-                Id = city.Id,
-                Name = city.Name,
-                Description = city.Description
-            };
-
-            return Ok(cityWithoutPointsResult);
+            return Ok(_mapper.Map<CityWithoutPointsOfInterestDto>(city));
         }
 
         [HttpPost]
         public IActionResult InsertCity([FromBody] CityDto city)
         {
+            var hasRedFlags = HasRedFlags(city.Id);
+            if (hasRedFlags) return BadRequest(ModelState);
+
+            var cityExists = _cityInfoRepository.CityExists(city.Id);
+
             return Ok();
         }
 
@@ -85,17 +65,16 @@ namespace SolvexApi.Controllers
         }
 
         #region Private Methods
-        private void AttachPointsOfInterestToCity(City cityFromRepo, ref CityDto cityDto)
+        private bool HasRedFlags(int cityId)
         {
-            foreach (var pointOfInterest in cityFromRepo.PointsOfInterest)
+            if (cityId <= 0)
             {
-                cityDto.PointsOfInterest.Add(new PointOfInterestDto()
-                {
-                    Id = pointOfInterest.Id,
-                    Name = pointOfInterest.Name,
-                    Description = pointOfInterest.Description
-                });
+                ModelState.AddModelError("City Id", "The id provided is not allowed");
+                return true;
             }
+
+            if (!ModelState.IsValid) return true;
+            return false;
         }
         #endregion
     }

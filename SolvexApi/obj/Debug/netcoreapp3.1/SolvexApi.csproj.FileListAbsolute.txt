@@ -67,3 +67,5 @@ C:\Users\hp\source\repos\SolvexApi\SolvexApi\bin\Debug\netcoreapp3.1\runtimes\wi
 C:\Users\hp\source\repos\SolvexApi\SolvexApi\bin\Debug\netcoreapp3.1\nlog.config
 C:\Users\hp\source\repos\SolvexApi\SolvexApi\bin\Debug\netcoreapp3.1\Humanizer.dll
 C:\Users\hp\source\repos\SolvexApi\SolvexApi\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\hp\source\repos\SolvexApi\SolvexApi\bin\Debug\netcoreapp3.1\AutoMapper.dll
+C:\Users\hp\source\repos\SolvexApi\SolvexApi\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

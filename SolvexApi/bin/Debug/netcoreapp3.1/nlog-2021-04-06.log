@@ -1,0 +1,30 @@
+2021-04-06 09:46:35.0251|INFO|SolvexApi.Program|Initializing application...
+2021-04-06 09:46:45.8091|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-04-06 09:46:45.8785|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-04-06 09:46:46.1324|INFO|Microsoft.Hosting.Lifetime|Content root path: C:\Users\hp\source\repos\SolvexApi\SolvexApi
+2021-04-06 09:47:55.2221|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request.
+2021-04-06 09:57:59.3086|INFO|SolvexApi.Program|Initializing application...
+2021-04-06 09:58:05.7430|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-04-06 09:58:05.7430|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-04-06 09:58:05.7661|INFO|Microsoft.Hosting.Lifetime|Content root path: C:\Users\hp\source\repos\SolvexApi\SolvexApi
+2021-04-06 10:04:32.3499|INFO|SolvexApi.Program|Initializing application...
+2021-04-06 10:04:37.9780|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-04-06 10:04:37.9978|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-04-06 10:04:38.0127|INFO|Microsoft.Hosting.Lifetime|Content root path: C:\Users\hp\source\repos\SolvexApi\SolvexApi
+2021-04-06 10:05:42.8958|INFO|SolvexApi.Controllers.PointOfInterestController|City with id 1 was not found when accesing points of interest.
+2021-04-06 10:05:42.9630|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request.
+2021-04-06 10:07:22.3695|INFO|SolvexApi.Program|Initializing application...
+2021-04-06 10:07:27.6120|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-04-06 10:07:27.6212|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-04-06 10:07:27.6462|INFO|Microsoft.Hosting.Lifetime|Content root path: C:\Users\hp\source\repos\SolvexApi\SolvexApi
+2021-04-06 10:07:33.4504|INFO|SolvexApi.Controllers.PointOfInterestController|City with id 1 was not found when accesing points of interest.
+2021-04-06 10:07:42.1577|INFO|SolvexApi.Controllers.PointOfInterestController|City with id 1 was not found when accesing points of interest.
+2021-04-06 10:09:04.0186|INFO|SolvexApi.Program|Initializing application...
+2021-04-06 10:09:08.5832|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-04-06 10:09:08.6003|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-04-06 10:09:08.6003|INFO|Microsoft.Hosting.Lifetime|Content root path: C:\Users\hp\source\repos\SolvexApi\SolvexApi
+2021-04-06 10:09:20.3861|INFO|SolvexApi.Controllers.PointOfInterestController|City with id 1 was not found when accesing points of interest.
+2021-04-06 10:10:19.6688|INFO|SolvexApi.Program|Initializing application...
+2021-04-06 10:10:24.6193|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-04-06 10:10:24.6193|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-04-06 10:10:24.6392|INFO|Microsoft.Hosting.Lifetime|Content root path: C:\Users\hp\source\repos\SolvexApi\SolvexApi
