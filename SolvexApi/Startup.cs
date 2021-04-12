@@ -11,6 +11,18 @@ using SolvexApi.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System;
 using SolvexApi.Repositories;
+using Microsoft.OpenApi.Models;
+using FluentValidation;
+using SolvexApi.Validators;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNet.OData.Extensions;
+using Microsoft.OData.Edm;
+using Microsoft.AspNet.OData.Builder;
+using OData.Swagger.Services;
+using SolvexApi.Models.Auth;
+using SolvexApi.Models;
 
 namespace SolvexApi
 {
@@ -26,9 +38,11 @@ namespace SolvexApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().AddMvcOptions(o => o.OutputFormatters.Add(
-                new XmlDataContractSerializerOutputFormatter()
-            ));
+            services.AddMvc().AddMvcOptions(o =>
+            {
+                o.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
+                o.EnableEndpointRouting = false;
+            });
 #if DEBUG
             services.AddTransient<IMailService, LocalMailService>();
 #else
@@ -38,7 +52,55 @@ namespace SolvexApi
             services.AddDbContext<CityInfoContext>(o => o.UseSqlServer(connectionString));
             services.AddScoped<ICityInfoRepository, CityInfoRepository>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddControllers();
+            services.AddTransient<IValidator<CityDto>, CityValidator>();
+            services.AddTransient<IUserContext, UserContext>();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "ToDo API",
+                    Description = "A simple example ASP.NET Core Web API",
+                    TermsOfService = new Uri("https://example.com/terms"),
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Shayne Boyer",
+                        Email = string.Empty,
+                        Url = new Uri("https://twitter.com/spboyer"),
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "Use under LICX",
+                        Url = new Uri("https://example.com/license"),
+                    }
+                });
+            });
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = Configuration["Jwt:Issuer"],
+                    ValidAudience = Configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:SecretKey"])),
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
+            services.AddAuthorization(config =>
+            {
+                config.AddPolicy(Policy.Admin, Policy.AdminPolicy());
+                config.AddPolicy(Policy.User, Policy.UserPolicy());
+            });
+            services.AddCors(options => options.AddPolicy("AllowAnyOrigin", builder => builder.AllowAnyOrigin()));
+            services.AddOData();
+            services.AddOdataSwaggerSupport();
+            services.AddControllers().AddNewtonsoftJson();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,9 +115,17 @@ namespace SolvexApi
                 app.UseExceptionHandler("/Error");
             }
 
+            app.UseSwagger();
+
+            app.UseSwaggerUI(s => s.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"));
+
             app.UseStatusCodePages();
 
             app.UseHttpsRedirection();
+
+            app.UseMvc();
+
+            app.UseAuthentication();
 
             app.UseRouting();
 
@@ -64,7 +134,16 @@ namespace SolvexApi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.EnableDependencyInjection();
+                endpoints.Expand().Select().Filter().OrderBy().MaxTop(100).Count();
+                endpoints.MapODataRoute("api", "api", GetEdmModel());
             });
+        }
+        private IEdmModel GetEdmModel()
+        {
+            var builder = new ODataConventionModelBuilder();
+            builder.EntitySet<CityWithoutPointsOfInterestDto>("Cities");
+            return builder.GetEdmModel();
         }
     }
 }
