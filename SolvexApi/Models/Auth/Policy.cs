@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 
-namespace SolvexApi.Models.Auth
+namespace WebApplication.Models.Auth
 {
     public class Policy
     {

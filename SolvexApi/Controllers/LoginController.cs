@@ -1,6 +1,4 @@
-﻿using SolvexApi.Interfaces;
-using SolvexApi.Models.Auth;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -9,6 +7,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using DataAccess.Entities;
+using DataAccess.Repositories.UserEntity;
 
 namespace SolvexApi.Controllers
 {
@@ -17,8 +17,8 @@ namespace SolvexApi.Controllers
     public class LoginController : ControllerBase
     {
         private readonly IConfiguration _config;
-        private readonly IUserContext _context;
-        public LoginController(IConfiguration config, IUserContext context)
+        private readonly UserRepository _context;
+        public LoginController(IConfiguration config, UserRepository context)
         {
             _config = config;
             _context = context;
@@ -37,7 +37,7 @@ namespace SolvexApi.Controllers
 
         User AuthenticateUser(User loginCredentials)
         {
-            User user = _context.GetAllUsers().SingleOrDefault(x => x.UserName == loginCredentials.UserName
+            User user = _context.GetAll().SingleOrDefault(x => x.UserName == loginCredentials.UserName
                         && x.Password == loginCredentials.Password);
             return user;
         }

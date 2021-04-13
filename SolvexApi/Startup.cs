@@ -5,12 +5,8 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SolvexApi.Interfaces;
-using SolvexApi.Services;
-using SolvexApi.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System;
-using SolvexApi.Repositories;
 using Microsoft.OpenApi.Models;
 using FluentValidation;
 using SolvexApi.Validators;
@@ -21,8 +17,16 @@ using Microsoft.AspNet.OData.Extensions;
 using Microsoft.OData.Edm;
 using Microsoft.AspNet.OData.Builder;
 using OData.Swagger.Services;
-using SolvexApi.Models.Auth;
-using SolvexApi.Models;
+using MailService.Implementations;
+using MailService.Interfaces;
+using DataAccess;
+using DataAccess.Interfaces;
+using DataAccess.Repositories.CityInfo;
+using BusinessLayer.Dtos.CityEntity;
+using DataAccess.Repositories.UserEntity;
+using WebApplication.Models.Auth;
+using BusinessLayer.Interfaces.CityService;
+using BusinessLayer.Services.CityEntity;
 
 namespace SolvexApi
 {
@@ -50,10 +54,11 @@ namespace SolvexApi
 #endif
             var connectionString = Configuration["connectionStrings:CityInfoDb"];
             services.AddDbContext<CityInfoContext>(o => o.UseSqlServer(connectionString));
-            services.AddScoped<ICityInfoRepository, CityInfoRepository>();
+            services.AddScoped<ICityService, CityService>();
+            services.AddScoped<ICityRepository, CityRepository>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddTransient<IValidator<CityDto>, CityValidator>();
-            services.AddTransient<IUserContext, UserContext>();
+            services.AddTransient<IUserRepository, UserRepository>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen(c =>
             {

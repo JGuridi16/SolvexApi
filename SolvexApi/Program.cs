@@ -1,9 +1,9 @@
+using DataAccess;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NLog.Web;
-using SolvexApi.Contexts;
 using System;
 
 namespace SolvexApi

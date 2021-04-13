@@ -1,6 +1,6 @@
-﻿using SolvexApi.Models.Auth;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebApplication.Models.Auth;
 
 namespace SolvexApi.Controllers
 {

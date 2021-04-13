@@ -1,9 +1,6 @@
-﻿using AutoMapper;
+﻿using BusinessLayer.Dtos.CityEntity;
+using BusinessLayer.Interfaces.CityService;
 using Microsoft.AspNetCore.Mvc;
-using SolvexApi.Entities;
-using SolvexApi.Interfaces;
-using SolvexApi.Models;
-using System.Collections.Generic;
 
 namespace SolvexApi.Controllers
 {
@@ -11,34 +8,27 @@ namespace SolvexApi.Controllers
     [Route("[controller]")]
     public class CitiesController : ControllerBase
     {
-        private readonly ICityInfoRepository _cityInfoRepository;
-        private readonly IMapper _mapper;
+        private readonly ICityService _cityService;
 
-        public CitiesController(ICityInfoRepository cityInfoRepository, IMapper mapper)
+        public CitiesController(ICityService cityService)
         {
-            _cityInfoRepository = cityInfoRepository;
-            _mapper = mapper;
+            _cityService = cityService;
         }
 
         [HttpGet(Name = "GetAllCities")]
         public IActionResult GetCities()
         {
-            var cityEntities = _cityInfoRepository.GetAllCities();
-
-            return Ok(_mapper.Map<IEnumerable<CityWithoutPointsOfInterestDto>>(cityEntities));
+            var cities = _cityService.GetAll();
+            return Ok(cities);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetCity")]
         public IActionResult GetCity([FromRoute] int id, bool includePointsOfInterest = false)
         {
-            var city = _cityInfoRepository.GetOneCity(id, includePointsOfInterest);
+            var city = _cityService.GetOne(id, includePointsOfInterest);
             if (city == null) return NotFound();
-            if (includePointsOfInterest)
-            {
-                return Ok(_mapper.Map<CityDto>(city));
-            }
 
-            return Ok(_mapper.Map<CityWithoutPointsOfInterestDto>(city));
+            return Ok(city);
         }
 
         [HttpPost]
@@ -47,21 +37,30 @@ namespace SolvexApi.Controllers
             var hasRedFlags = HasRedFlags(city.Id);
             if (hasRedFlags) return BadRequest(ModelState);
 
-            var cityExists = _cityInfoRepository.CityExists(city.Id);
+            var cityResult = _cityService.Create(city);
+            if (!cityResult.IsValid)
+                return BadRequest(cityResult.Errors);
 
-            return Ok();
+            return CreatedAtRoute("GetCity", new { city.Id }, city);
         }
 
         [HttpPut]
         public IActionResult UpdateCity([FromBody] CityDto city)
         {
-            return Ok();
+            var cityResult = _cityService.Update(city);
+            if (!cityResult.IsValid)
+                return BadRequest(cityResult.Errors);
+
+            return Ok(cityResult.Entity);
         }
 
         [HttpDelete("{id}")]
         public IActionResult DropCity(int id)
         {
-            return Ok();
+            var cityResult = _cityService.Delete(id);
+            if (!cityResult.IsValid)
+                return BadRequest(cityResult.Errors);
+            return Ok(cityResult.Entity);
         }
 
         #region Private Methods

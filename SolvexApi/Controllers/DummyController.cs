@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using SolvexApi.Contexts;
+﻿using DataAccess;
+using Microsoft.AspNetCore.Mvc;
 using System;
 
 namespace SolvexApi.Controllers
