@@ -23,7 +23,7 @@ namespace SolvexApi
                     try
                     {
                         var context = scope.ServiceProvider.GetService<CityInfoContext>();
-                        context.Database.EnsureDeleted();
+                        //context.Database.EnsureDeleted();
                         context.Database.Migrate();
                     }
                     catch (Exception ex)

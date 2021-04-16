@@ -30,16 +30,11 @@ namespace BusinessLayer.Services.CityEntity
             return _mapper.Map<IEnumerable<CityDto>>(cities);
         }
 
-        public dynamic GetOne(int id, bool includePointsOfInterest = false)
+        public CityDto GetOne(int id)
         {
             var city = _cityRepository.GetOne(id);
 
-            if (includePointsOfInterest)
-            {
-                return _mapper.Map<CityDto>(city);
-            }
-
-            return _mapper.Map<CityWithoutPointsOfInterestDto>(city);
+            return _mapper.Map<CityDto>(city);
         }
 
         public IEntityValidator<CityDto> Create(CityDto cityDto)
@@ -53,22 +48,15 @@ namespace BusinessLayer.Services.CityEntity
                     Errors = validationResult.Errors.Select(e => e.ErrorMessage)
                 };
 
-            var cityResult = _cityRepository.GetAll()
-                .Any(c => c.Id == cityDto.Id);
-
-            if (cityResult)
-                return new EntityValidator<CityDto>
-                {
-                    Entity = cityDto,
-                    IsValid = false,
-                    Errors = new List<string>
-                    {
-                        "This city already exist"
-                    }
-                };
-
             var cityToCreate = _mapper.Map<City>(cityDto);
             cityToCreate = _cityRepository.Create(cityToCreate);
+
+            if(cityToCreate is null) return new EntityValidator<CityDto>
+            {
+                Entity = null,
+                IsValid = false
+            };
+
             cityDto = _mapper.Map<CityDto>(cityToCreate);
 
             return new EntityValidator<CityDto>
@@ -89,8 +77,8 @@ namespace BusinessLayer.Services.CityEntity
                     Errors = validationResult.Errors.Select(e => e.ErrorMessage)
                 };
 
-            var cityExists = _cityRepository.GetAll()
-                .Any(c => c.Id == cityDto.Id);
+            var cities = _cityRepository.GetAll();
+            var cityExists = cities.Any(c => c.Id == cityDto.Id);
 
             if (!cityExists)
                 return new EntityValidator<CityDto>
@@ -104,7 +92,20 @@ namespace BusinessLayer.Services.CityEntity
                 };
 
             var cityToUpdate = _cityRepository.GetOne(cityDto.Id);
-            cityToUpdate = _cityRepository.Update(cityToUpdate);
+            if(cityToUpdate is null) return new EntityValidator<CityDto>
+            {
+                Entity = cityDto,
+                IsValid = false,
+                Errors = validationResult.Errors.Select(e => e.ErrorMessage).Append("No city found")
+            };
+            cityToUpdate = _cityRepository.Update(_mapper.Map<City>(cityDto));
+            if(cityToUpdate is null) return new EntityValidator<CityDto>
+            {
+                Entity = cityDto,
+                IsValid = false,
+                Errors = validationResult.Errors.Select(e => e.ErrorMessage)
+                .Append("The city could not be updated")
+            };
             cityDto = _mapper.Map<CityDto>(cityToUpdate);
 
             return new EntityValidator<CityDto>
@@ -130,6 +131,12 @@ namespace BusinessLayer.Services.CityEntity
                 };
 
             city = _cityRepository.Delete(id);
+            if (city is null) return new EntityValidator<CityDto>
+            {
+                Entity = _mapper.Map<CityDto>(city),
+                IsValid = false,
+                Errors = new List<string>() { "The city could not be deleted" }
+            };
             var cityDto = _mapper.Map<CityDto>(city);
             return new EntityValidator<CityDto>
             {

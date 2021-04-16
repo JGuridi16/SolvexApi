@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -17,8 +15,6 @@ using Microsoft.AspNet.OData.Extensions;
 using Microsoft.OData.Edm;
 using Microsoft.AspNet.OData.Builder;
 using OData.Swagger.Services;
-using MailService.Implementations;
-using MailService.Interfaces;
 using DataAccess;
 using DataAccess.Interfaces;
 using DataAccess.Repositories.CityInfo;
@@ -27,6 +23,10 @@ using DataAccess.Repositories.UserEntity;
 using WebApplication.Models.Auth;
 using BusinessLayer.Interfaces.CityService;
 using BusinessLayer.Services.CityEntity;
+using FluentValidation.AspNetCore;
+using BusinessLayer.Services.UserEntity;
+using BusinessLayer.Interfaces.UserService;
+using BusinessLayer.Settings;
 
 namespace SolvexApi
 {
@@ -42,23 +42,15 @@ namespace SolvexApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().AddMvcOptions(o =>
-            {
-                o.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
-                o.EnableEndpointRouting = false;
-            });
-#if DEBUG
-            services.AddTransient<IMailService, LocalMailService>();
-#else
-            services.AddTransient<IMailService, CloudMailService>();
-#endif
             var connectionString = Configuration["connectionStrings:CityInfoDb"];
-            services.AddDbContext<CityInfoContext>(o => o.UseSqlServer(connectionString));
-            services.AddScoped<ICityService, CityService>();
-            services.AddScoped<ICityRepository, CityRepository>();
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.Configure<JwtSettings>(Configuration.GetSection("Jwt"));
+            services.AddMvc().AddFluentValidation();
             services.AddTransient<IValidator<CityDto>, CityValidator>();
-            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddDbContext<CityInfoContext>(o => o.UseSqlServer(connectionString));
+            services.AddScoped<ICityRepository, CityRepository>();
+            services.AddScoped<ICityService, CityService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen(c =>
             {
@@ -105,7 +97,7 @@ namespace SolvexApi
             services.AddCors(options => options.AddPolicy("AllowAnyOrigin", builder => builder.AllowAnyOrigin()));
             services.AddOData();
             services.AddOdataSwaggerSupport();
-            services.AddControllers().AddNewtonsoftJson();
+            services.AddControllers(o => o.EnableEndpointRouting = false).AddNewtonsoftJson();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -120,6 +112,8 @@ namespace SolvexApi
                 app.UseExceptionHandler("/Error");
             }
 
+            app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
             app.UseSwagger();
 
             app.UseSwaggerUI(s => s.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"));
@@ -128,13 +122,13 @@ namespace SolvexApi
 
             app.UseHttpsRedirection();
 
-            app.UseMvc();
+            app.UseRouting();
 
             app.UseAuthentication();
 
-            app.UseRouting();
-
             app.UseAuthorization();
+
+            app.UseMvc();
 
             app.UseEndpoints(endpoints =>
             {
@@ -147,7 +141,7 @@ namespace SolvexApi
         private IEdmModel GetEdmModel()
         {
             var builder = new ODataConventionModelBuilder();
-            builder.EntitySet<CityWithoutPointsOfInterestDto>("Cities");
+            builder.EntitySet<CityDto>("Cities");
             return builder.GetEdmModel();
         }
     }

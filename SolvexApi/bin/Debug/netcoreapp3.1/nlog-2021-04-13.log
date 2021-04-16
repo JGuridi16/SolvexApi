@@ -53,3 +53,47 @@ Error Number:544,State:1,Class:16
 2021-04-13 02:28:39.6137|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
 2021-04-13 02:28:39.6245|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
 2021-04-13 02:28:39.6245|INFO|Microsoft.Hosting.Lifetime|Content root path: C:\Users\hp\source\repos\SolvexApi\SolvexApi
+2021-04-13 09:25:16.3718|INFO|SolvexApi.Program|Initializing application...
+2021-04-13 09:25:35.0273|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-04-13 09:25:35.0420|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-04-13 09:25:35.0550|INFO|Microsoft.Hosting.Lifetime|Content root path: C:\Users\hp\source\repos\SolvexApi\SolvexApi
+2021-04-13 21:26:05.4896|INFO|SolvexApi.Program|Initializing application...
+2021-04-13 21:26:31.0340|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-04-13 21:26:31.0472|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-04-13 21:26:31.0590|INFO|Microsoft.Hosting.Lifetime|Content root path: C:\Users\hp\source\repos\SolvexApi\SolvexApi
+2021-04-13 21:33:09.3599|INFO|SolvexApi.Program|Initializing application...
+2021-04-13 21:33:27.8383|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-04-13 21:33:27.8530|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-04-13 21:33:27.8672|INFO|Microsoft.Hosting.Lifetime|Content root path: C:\Users\hp\source\repos\SolvexApi\SolvexApi
+2021-04-13 21:33:59.8612|INFO|SolvexApi.Program|Initializing application...
+2021-04-13 21:34:18.1961|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-04-13 21:34:18.2115|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-04-13 21:34:18.2710|INFO|Microsoft.Hosting.Lifetime|Content root path: C:\Users\hp\source\repos\SolvexApi\SolvexApi
+2021-04-13 21:51:56.4105|INFO|SolvexApi.Program|Initializing application...
+2021-04-13 21:52:12.7034|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-04-13 21:52:12.7034|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-04-13 21:52:12.7311|INFO|Microsoft.Hosting.Lifetime|Content root path: C:\Users\hp\source\repos\SolvexApi\SolvexApi
+2021-04-13 22:37:11.1873|INFO|SolvexApi.Program|Initializing application...
+2021-04-13 22:37:24.2479|INFO|Microsoft.Hosting.Lifetime|Now listening on: https://localhost:5001
+2021-04-13 22:37:24.2479|INFO|Microsoft.Hosting.Lifetime|Now listening on: http://localhost:5000
+2021-04-13 22:37:24.2479|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-04-13 22:37:24.2479|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-04-13 22:37:24.2479|INFO|Microsoft.Hosting.Lifetime|Content root path: C:\Users\hp\source\repos\SolvexApi\SolvexApi
+2021-04-13 22:37:57.9632|INFO|Microsoft.Hosting.Lifetime|Application is shutting down...
+2021-04-13 22:38:06.2499|INFO|SolvexApi.Program|Initializing application...
+2021-04-13 22:38:19.0791|INFO|Microsoft.Hosting.Lifetime|Now listening on: https://localhost:5001
+2021-04-13 22:38:19.0831|INFO|Microsoft.Hosting.Lifetime|Now listening on: http://localhost:5000
+2021-04-13 22:38:19.0831|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-04-13 22:38:19.0831|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-04-13 22:38:19.0831|INFO|Microsoft.Hosting.Lifetime|Content root path: C:\Users\hp\source\repos\SolvexApi\SolvexApi
+2021-04-13 22:38:36.9322|INFO|Microsoft.Hosting.Lifetime|Application is shutting down...
+2021-04-13 22:40:17.0003|INFO|SolvexApi.Program|Initializing application...
+2021-04-13 22:40:29.7173|INFO|Microsoft.Hosting.Lifetime|Now listening on: http://localhost:5000
+2021-04-13 22:40:29.7214|INFO|Microsoft.Hosting.Lifetime|Now listening on: https://localhost:5001
+2021-04-13 22:40:29.7214|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-04-13 22:40:29.7214|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Production
+2021-04-13 22:40:29.7214|INFO|Microsoft.Hosting.Lifetime|Content root path: C:\Users\hp\source\repos\SolvexApi\SolvexApi\bin\Debug\netcoreapp3.1
+2021-04-13 22:41:38.7193|INFO|SolvexApi.Program|Initializing application...
+2021-04-13 22:41:57.9769|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-04-13 22:41:58.0739|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-04-13 22:41:58.3737|INFO|Microsoft.Hosting.Lifetime|Content root path: C:\Users\hp\source\repos\SolvexApi\SolvexApi

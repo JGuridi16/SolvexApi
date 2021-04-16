@@ -1,0 +1,14 @@
+C:\Users\hp\source\repos\SolvexApi\ApplicationCore\bin\Debug\netcoreapp3.1\BusinessLayer.deps.json
+C:\Users\hp\source\repos\SolvexApi\ApplicationCore\bin\Debug\netcoreapp3.1\BusinessLayer.dll
+C:\Users\hp\source\repos\SolvexApi\ApplicationCore\bin\Debug\netcoreapp3.1\BusinessLayer.pdb
+C:\Users\hp\source\repos\SolvexApi\ApplicationCore\bin\Debug\netcoreapp3.1\DataAccess.dll
+C:\Users\hp\source\repos\SolvexApi\ApplicationCore\bin\Debug\netcoreapp3.1\ModelValidator.dll
+C:\Users\hp\source\repos\SolvexApi\ApplicationCore\bin\Debug\netcoreapp3.1\DataAccess.pdb
+C:\Users\hp\source\repos\SolvexApi\ApplicationCore\bin\Debug\netcoreapp3.1\ModelValidator.pdb
+C:\Users\hp\source\repos\SolvexApi\ApplicationCore\obj\Debug\netcoreapp3.1\BusinessLayer.csprojAssemblyReference.cache
+C:\Users\hp\source\repos\SolvexApi\ApplicationCore\obj\Debug\netcoreapp3.1\BusinessLayer.AssemblyInfoInputs.cache
+C:\Users\hp\source\repos\SolvexApi\ApplicationCore\obj\Debug\netcoreapp3.1\BusinessLayer.AssemblyInfo.cs
+C:\Users\hp\source\repos\SolvexApi\ApplicationCore\obj\Debug\netcoreapp3.1\BusinessLayer.csproj.CoreCompileInputs.cache
+C:\Users\hp\source\repos\SolvexApi\ApplicationCore\obj\Debug\netcoreapp3.1\BusinessLayer.csproj.CopyComplete
+C:\Users\hp\source\repos\SolvexApi\ApplicationCore\obj\Debug\netcoreapp3.1\BusinessLayer.dll
+C:\Users\hp\source\repos\SolvexApi\ApplicationCore\obj\Debug\netcoreapp3.1\BusinessLayer.pdb

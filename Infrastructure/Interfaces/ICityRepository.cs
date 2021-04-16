@@ -10,6 +10,5 @@ namespace DataAccess.Interfaces
         City Create(City city);
         City Update(City cityToUpdate);
         City Delete(int id);
-        void Save();
     }
 }

@@ -1,0 +1,9 @@
+C:\Users\hp\source\repos\SolvexApi\MailHandler\bin\Debug\netcoreapp3.1\MailService.deps.json
+C:\Users\hp\source\repos\SolvexApi\MailHandler\bin\Debug\netcoreapp3.1\MailService.dll
+C:\Users\hp\source\repos\SolvexApi\MailHandler\bin\Debug\netcoreapp3.1\MailService.pdb
+C:\Users\hp\source\repos\SolvexApi\MailHandler\obj\Debug\netcoreapp3.1\MailService.csprojAssemblyReference.cache
+C:\Users\hp\source\repos\SolvexApi\MailHandler\obj\Debug\netcoreapp3.1\MailService.AssemblyInfoInputs.cache
+C:\Users\hp\source\repos\SolvexApi\MailHandler\obj\Debug\netcoreapp3.1\MailService.AssemblyInfo.cs
+C:\Users\hp\source\repos\SolvexApi\MailHandler\obj\Debug\netcoreapp3.1\MailService.csproj.CoreCompileInputs.cache
+C:\Users\hp\source\repos\SolvexApi\MailHandler\obj\Debug\netcoreapp3.1\MailService.dll
+C:\Users\hp\source\repos\SolvexApi\MailHandler\obj\Debug\netcoreapp3.1\MailService.pdb

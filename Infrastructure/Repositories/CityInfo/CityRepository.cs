@@ -18,7 +18,7 @@ namespace DataAccess.Repositories.CityInfo
 
         public IEnumerable<City> GetAll()
         {
-            return _context.Cities.OrderBy(c => c.Name).ToList();
+            return _context.Cities.OrderBy(c => c.Id).ToList();
         }
 
         public City GetOne(int cityId)
@@ -28,35 +28,54 @@ namespace DataAccess.Repositories.CityInfo
 
         public City Create(City city)
         {
-            var result = _context.Cities.Add(city);
-            Save();
+            try
+            {
+                var result = _context.Cities.Add(new City { Name = city.Name, Description = city.Description });
+                _context.SaveChanges();
 
-            return result.Entity;
+                return result.Entity;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("ERROR: "+ex);
+                return null;
+            }
         }
 
         public City Update(City cityToUpdate)
         {
-            var cityEntity = _context.Cities.FirstOrDefault(city => city.Id == cityToUpdate.Id);
-            if (cityEntity == null) return null;
-            _context.Cities.Update(cityToUpdate);
-            Save();
+            try
+            {
+                var cityEntity = _context.Cities.FirstOrDefault(city => city.Id == cityToUpdate.Id);
+                if (cityEntity == null) return null;
+                bool didUpdate = _context.Entry(cityEntity).State == EntityState.Modified;
+                if(didUpdate) _context.SaveChanges();
 
-            return cityToUpdate;
+                return cityToUpdate;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("ERROR: " + ex);
+                return null;
+            }
         }
 
         public City Delete(int id)
         {
-            var city = _context.Cities.FirstOrDefault(c => c.Id == id);
-            if (city == null) return null;
-            _context.Cities.Remove(city);
-            Save();
+            try
+            {
+                var city = _context.Cities.FirstOrDefault(c => c.Id == id);
+                if (city == null) return null;
+                _context.Cities.Remove(city);
+                _context.SaveChanges();
 
-            return city;
-        }
-
-        public void Save()
-        {
-            _context.SaveChanges();
+                return city;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("ERROR: " + ex);
+                return null;
+            }
         }
     }
 }

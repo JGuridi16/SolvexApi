@@ -30,7 +30,6 @@ namespace DataAccess.Migrations
                         .HasMaxLength(200);
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 

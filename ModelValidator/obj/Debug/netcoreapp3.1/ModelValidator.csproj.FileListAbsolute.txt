@@ -1,0 +1,12 @@
+C:\Users\hp\source\repos\SolvexApi\ModelValidator\bin\Debug\netcoreapp3.1\ModelValidator.deps.json
+C:\Users\hp\source\repos\SolvexApi\ModelValidator\bin\Debug\netcoreapp3.1\ModelValidator.dll
+C:\Users\hp\source\repos\SolvexApi\ModelValidator\bin\Debug\netcoreapp3.1\ModelValidator.pdb
+C:\Users\hp\source\repos\SolvexApi\ModelValidator\bin\Debug\netcoreapp3.1\DataAccess.dll
+C:\Users\hp\source\repos\SolvexApi\ModelValidator\bin\Debug\netcoreapp3.1\DataAccess.pdb
+C:\Users\hp\source\repos\SolvexApi\ModelValidator\obj\Debug\netcoreapp3.1\ModelValidator.csprojAssemblyReference.cache
+C:\Users\hp\source\repos\SolvexApi\ModelValidator\obj\Debug\netcoreapp3.1\ModelValidator.AssemblyInfoInputs.cache
+C:\Users\hp\source\repos\SolvexApi\ModelValidator\obj\Debug\netcoreapp3.1\ModelValidator.AssemblyInfo.cs
+C:\Users\hp\source\repos\SolvexApi\ModelValidator\obj\Debug\netcoreapp3.1\ModelValidator.csproj.CoreCompileInputs.cache
+C:\Users\hp\source\repos\SolvexApi\ModelValidator\obj\Debug\netcoreapp3.1\ModelValidator.csproj.CopyComplete
+C:\Users\hp\source\repos\SolvexApi\ModelValidator\obj\Debug\netcoreapp3.1\ModelValidator.dll
+C:\Users\hp\source\repos\SolvexApi\ModelValidator\obj\Debug\netcoreapp3.1\ModelValidator.pdb

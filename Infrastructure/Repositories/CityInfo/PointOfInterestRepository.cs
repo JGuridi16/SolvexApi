@@ -17,7 +17,8 @@ namespace DataAccess.Repositories.CityInfo
 
         public IEnumerable<PointOfInterest> GetAll(int cityId)
         {
-            return _context.PointsOfInterest.Where(p => p.CityId == cityId).ToList();
+            return _context.PointsOfInterest.Where(p => p.CityId == cityId)
+                .OrderBy(p => p.Id).ToList();
         }
 
         public PointOfInterest GetOne(int cityId, int pointOfInterestId)

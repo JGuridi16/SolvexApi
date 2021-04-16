@@ -10,7 +10,7 @@ namespace SolvexApi.Profiles
         {
             CreateMap<City, CityWithoutPointsOfInterestDto>();
             CreateMap<City, CityDto>();
-            CreateMap<City, CityDto>().ReverseMap();
+            CreateMap<CityDto, City>();
         }
     }
 }

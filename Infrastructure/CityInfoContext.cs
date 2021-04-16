@@ -61,6 +61,8 @@ namespace DataAccess
                         CityId = 1
                     }
                 );
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

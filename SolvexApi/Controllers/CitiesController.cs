@@ -23,9 +23,9 @@ namespace SolvexApi.Controllers
         }
 
         [HttpGet("{id}", Name = "GetCity")]
-        public IActionResult GetCity([FromRoute] int id, bool includePointsOfInterest = false)
+        public IActionResult GetCity([FromRoute] int id)
         {
-            var city = _cityService.GetOne(id, includePointsOfInterest);
+            var city = _cityService.GetOne(id);
             if (city == null) return NotFound();
 
             return Ok(city);
@@ -39,7 +39,7 @@ namespace SolvexApi.Controllers
 
             var cityResult = _cityService.Create(city);
             if (!cityResult.IsValid)
-                return BadRequest(cityResult.Errors);
+                return BadRequest("City could not be created");
 
             return CreatedAtRoute("GetCity", new { city.Id }, city);
         }

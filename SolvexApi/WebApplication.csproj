@@ -29,7 +29,6 @@
   <ItemGroup>
     <ProjectReference Include="..\ApplicationCore\BusinessLayer.csproj" />
     <ProjectReference Include="..\Infrastructure\DataAccess.csproj" />
-    <ProjectReference Include="..\MailHandler\MailService.csproj" />
   </ItemGroup>
 
 
